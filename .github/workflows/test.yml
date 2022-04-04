@@ -1,0 +1,31 @@
+name: test
+
+on: [push, pull_request]
+
+jobs:
+  list-configs:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v3
+      - id: set-matrix
+        run: echo "::set-output name=matrix::$(ls *.json | jq -R -s -c 'split("\n")[:-1]')"
+
+  validate:
+    needs: list-configs
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        config: ${{ fromJson(needs.list-configs.outputs.matrix) }}
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '14.x'
+    - uses: actions/cache@v3
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node
+    - name: Validate ${{ matrix.config }}
+      run: RENOVATE_CONFIG_FILE=${{ matrix.config }} npx --package renovate -c 'renovate-config-validator'
