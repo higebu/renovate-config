@@ -18,7 +18,6 @@
     ":automergeAll",
     ":maintainLockFilesDisabled",
     ":timezone(Asia/Tokyo)",
-    "schedule:nonOfficeHours",
     ":label(renovate)",
     "helpers:disableTypesNodeMajor"
   ],
