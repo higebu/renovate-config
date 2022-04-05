@@ -10,6 +10,7 @@
     "workarounds:all",
     ":semanticCommits",
     ":separateMultipleMajorReleases",
+    ":semanticCommitTypeAll(fix)",
     ":combinePatchMinorReleases",
     ":ignoreUnstable",
     ":prImmediately",
