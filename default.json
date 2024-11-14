@@ -25,5 +25,15 @@
   "prConcurrentLimit": 1,
   "postUpdateOptions": [
     "gomodTidy"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": ["^buf.gen.yaml$"],
+      "matchStrings": [
+        "- plugin: buf\\.build/(.*):(?<currentValue>[^\\s]+) # renovate: depName=(?<depName>[^\\s]+)"
+      ],
+      "datasourceTemplate": "github-releases"
+    }
   ]
 }
